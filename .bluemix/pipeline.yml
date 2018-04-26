@@ -1,62 +1,1405 @@
 ---
 stages:
-- name: BUILD
-  inputs:
-  - type: git
-    branch: master
-    service: ${SAMPLE_REPO}
-  triggers:
-  - type: commit
+- name: MyStage
   jobs:
   - name: Build
     type: builder
-- name: DEPLOY
-  inputs:
-  - type: job
-    stage: BUILD
-    job: Build
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+- name: '2'
   triggers:
   - type: stage
-  properties:
-  - name: CF_APP_NAME
-    value: undefined
-    type: text
-  - name: APP_URL
-    value: undefined
-    type: text
   jobs:
-  - name: Rolling Deploy
-    type: deployer
-    target:
-      region_id: ${PROD_REGION_ID}
-      organization: ${PROD_ORG_NAME}
-      space: ${PROD_SPACE_NAME}
-      application: ${CF_APP_NAME}
-    script: |
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
       #!/bin/bash
-      # Push app
-      if ! cf app $CF_APP; then  
-        cf push $CF_APP
-      else
-        OLD_CF_APP=${CF_APP}-OLD-$(date +"%s")
-        rollback() {
-          set +e  
-          if cf app $OLD_CF_APP; then
-            cf logs $CF_APP --recent
-            cf delete $CF_APP -f
-            cf rename $OLD_CF_APP $CF_APP
-          fi
-          exit 1
-        }
-        set -e
-        trap rollback ERR
-        cf rename $CF_APP $OLD_CF_APP
-        cf push $CF_APP
-        cf delete $OLD_CF_APP -f
-      fi
-      # Export app name and URL for use in later Pipeline jobs
-      export CF_APP_NAME="$CF_APP"
-      export APP_URL=http://$(cf app $CF_APP_NAME | grep -e urls: -e routes: | awk '{print $2}')
-      # View logs
-      #cf logs "${CF_APP}" --recent
-      
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+- name: stage3
+  triggers:
+  - type: stage
+  jobs:
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+- name: stage4
+  triggers:
+  - type: stage
+  jobs:
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+- name: stage5
+  triggers:
+  - type: stage
+  jobs:
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+- name: stage6
+  triggers:
+  - type: stage
+  jobs:
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+- name: '7'
+  triggers:
+  - type: stage
+  jobs:
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+- name: '8'
+  triggers:
+  - type: stage
+  jobs:
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+- name: '9'
+  triggers:
+  - type: stage
+  jobs:
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+- name: '10'
+  triggers:
+  - type: stage
+  jobs:
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+- name: '11'
+  triggers:
+  - type: stage
+  jobs:
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+- name: '12'
+  triggers:
+  - type: stage
+  jobs:
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+- name: '13'
+  triggers:
+  - type: stage
+  jobs:
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+- name: '14'
+  triggers:
+  - type: stage
+  jobs:
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+- name: '15'
+  triggers:
+  - type: stage
+  jobs:
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+- name: '16'
+  triggers:
+  - type: stage
+  jobs:
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+- name: '17'
+  triggers:
+  - type: stage
+  jobs:
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+- name: '18'
+  triggers:
+  - type: stage
+  jobs:
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+- name: '19'
+  triggers:
+  - type: stage
+  jobs:
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+- name: '20'
+  triggers:
+  - type: stage
+  jobs:
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+- name: '21'
+  triggers:
+  - type: stage
+  jobs:
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+- name: '22'
+  triggers:
+  - type: stage
+  jobs:
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+- name: '23'
+  triggers:
+  - type: stage
+  jobs:
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+- name: '24'
+  triggers:
+  - type: stage
+  jobs:
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+  - name: Test
+    type: tester
+    script: null
+    test_type: simple
+- name: '25'
+  triggers:
+  - type: stage
+  jobs:
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Build
+    type: builder
+    artifact_dir: ''
+    build_type: shell
+    script: |-
+      #!/bin/bash
+      # your script here
+      echo "hi"
+  - name: Test
+    type: tester
+    script: ''
+    test_type: simple
+  - name: Test
+    type: tester
+    script: ''
+    test_type: simple
+  - name: Test
+    type: tester
+    script: ''
+    test_type: simple
+  - name: Test
+    type: tester
+    script: ''
+    test_type: simple
+  - name: Test
+    type: tester
+    script: ''
+    test_type: simple
+  - name: Test
+    type: tester
+    script: ''
+    test_type: simple
+  - name: Test
+    type: tester
+    script: ''
+    test_type: simple
+hooks:
+- enabled: true
+  label: null
+  ssl_enabled: false
+  url: https://devops-api.ng.bluemix.net/v1/messaging/webhook/publish
